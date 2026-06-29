@@ -1,30 +1,27 @@
 # The Almanac
-### Data Preservation & Monitoring
 
-Public-interest data goes dark quietly — an agency is decommissioned, a URL rots, a
-dataset moves and nobody updates the link. **The Almanac is open infrastructure that
-maps where authoritative public datasets live, and watches whether they're still
-reachable.**
+**A community-maintained commons for public data — catalogs that map where authoritative datasets live, and monitor whether they stay reachable.**
 
-We **catalog, we don't host.** Each entry points to a dataset's canonical source, its
-archives, its license, and a continuously-checked reachability status. When something
-goes dark, we know — automatically.
+The Almanac doesn't host data. Each vertical is a small, version-controlled catalog of public datasets — canonical source, how to access it, license, and a daily check that flags anything that goes dark. When a government dataset moves or quietly disappears, the catalog is the map that survives.
 
 ## Catalogs
 
-- **[climate-almanac](https://github.com/almanac-data/climate-almanac)** — public
-  climate datasets, after the climate.gov decommissioning.
-  *(First catalog; more domains to follow.)*
+| Catalog | Domain | Datasets |
+|---|---|---|
+| [climate-almanac](https://github.com/almanac-data/climate-almanac) | Climate — NOAA, NASA, NSIDC | 17 |
+| [health-almanac](https://github.com/almanac-data/health-almanac) | Public health — CDC, WHO | 6 |
+| [economy-almanac](https://github.com/almanac-data/economy-almanac) | Economics & labor — BEA, Census, Treasury | 7 |
+| [environment-almanac](https://github.com/almanac-data/environment-almanac) | Environment — EPA, USGS | 7 |
+| [civic-almanac](https://github.com/almanac-data/civic-almanac) | Civic & government — USAspending, FEC, Federal Register | 6 |
 
-## How it works
+## Start your own
 
-- **Preservation** — canonical-source and archive mapping (Wayback, S3), versioned and
-  openly licensed (CC0 data / MIT tooling).
-- **Monitoring** — a daily reachability probe that auto-files an issue when a source
-  dies and closes it when the source recovers.
+Every catalog is built from **[almanac-template](https://github.com/almanac-data/almanac-template)** — click *Use this template*, edit one config file, and you have a self-validating, self-monitoring catalog. See the template's `SETUP.md`.
 
-## Contribute
+## How to help
 
-Built in the open. Whether it's a dataset to add, a dead link to report, or a whole new
-domain to start — contributions are welcome. Start with
-[climate-almanac](https://github.com/almanac-data/climate-almanac) or open an issue.
+Pick a **good first issue** in any catalog — each is a single dataset to add, and you don't need to write code to suggest one. We catalog the map; the data stays where it lives.
+
+---
+
+*The Almanac — data preservation & monitoring.*
