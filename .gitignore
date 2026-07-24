@@ -2,3 +2,4 @@
 # Wires this folder into the Willow fleet (MCP/Kart/handoffs) on the dev machine.
 .mcp.json
 .willow/
+.cursor/
