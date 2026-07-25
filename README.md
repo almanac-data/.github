@@ -8,5 +8,4 @@ transportation, environment — plus the
 [template](https://github.com/almanac-data/almanac-template) they're
 built from.
 
-Local-first ethos: the data is yours to keep. No ports, no servers,
-no subscriptions.
+Local-first ethos: the data is yours to keep.
