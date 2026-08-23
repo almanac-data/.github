@@ -1,33 +1,72 @@
-# Contributing
+# Contributing to The Almanac
 
-These repos share one working method, whether the contributor is a
-person or an agent.
+> **Scope note.** GitHub shows this file only for repositories in this organization that do not
+> ship their own `CONTRIBUTING.md` — today the meta and template repos. Every vertical
+> (`health-almanac`, `climate-almanac`, and their siblings) has its own, which takes precedence.
+> **If you came here wanting to add a dataset, read that vertical's `CONTRIBUTING.md` instead** —
+> it carries the field-by-field checklist this file deliberately does not duplicate.
 
-## The method
+## The one rule
 
-- **One bite at a time.** A PR delivers one outcome. If two unrelated
-  changes rode the branch, flag them so they can be reviewed or split.
-- **Receipts, not claims.** The PR template asks for Evidence — check
-  only what you actually ran, and state the result ("144 passed"), not
-  the intention ("tests should pass").
-- **Verify in a clean environment.** A shared venv can mask a missing
-  dependency that a fresh CI runner will catch. If you touched
-  dependencies, prove the suite in a clean venv before pushing.
-- **Fail closed.** When a check can't prove something is safe, it
-  blocks. Don't ship a gate that can be ignored.
-- **Archive, don't delete.** Stale things get marked as archived with
-  an honest description — history is a record, not a scratchpad.
-- **One implementation, no drift.** If the same logic exists in two
-  places, extract it; don't patch both.
-- **Match the house style.** Read the surrounding code first. Linters
-  are configured to accept deliberate styles — don't "fix" them.
+**Catalog, don't host.** These repositories map where public data lives; they never store the
+data itself. No CSVs, no NetCDF, no GeoTIFFs, no PDFs of the source. An entry points at the
+publisher's canonical home and records how to get there.
 
-## Practical bits
+If a change tempts you to commit a data file, the answer is almost always a catalog entry
+pointing at where that file already lives.
 
-- PRs use the closeout template (Bite / What was done / Evidence /
-  Out of scope / Next bite). It's inherited everywhere.
-- CI must be green before merge. Lint gates are enforced where the
-  tree is clean; keep it that way.
-- Dependency changes: run `pip-audit` if you can; dependabot patrols
-  weekly regardless.
-- Security findings go through [SECURITY.md](SECURITY.md), not issues.
+## Which repository takes your change
+
+| Change | Repository |
+|--------|-----------|
+| Add or fix one dataset entry | The relevant vertical, `catalog/<id>.yaml` only |
+| Schema, validation, link checking, CI | [`almanac-template`](https://github.com/almanac-data/almanac-template) — merges there first, then propagates |
+| Propagation scripts, cross-vertical tooling | [`almanac-data`](https://github.com/almanac-data/almanac-data) |
+| These org-wide documents | `.github` |
+
+Engine changes do not auto-sync. A merged change in `almanac-template` reaches the verticals only
+when a caretaker runs propagation, which opens one pull request per vertical. Expect the lag.
+
+## How entries are judged
+
+- **Authoritative sources only.** The publisher's canonical home, never a reposting or a
+  mirror-of-convenience.
+- **Verify before you assert.** Open the URL. An entry claiming a source is reachable when nobody
+  checked is worse than no entry, because it will be believed.
+- **Under-claim.** Where coverage, cadence, or lineage is uncertain, state the narrower thing you
+  can defend. An entry that says less and is right beats one that says more and is not.
+- **Honest status.** `live`, `revised`, `moved`, `redirected`, `superseded`, `dark`, `frozen` —
+  set from what was actually observed, never from what would be tidier.
+- **Machine facts stay machine-written.** The `observed` block records what a probe saw. Set
+  `observed.checked` and leave `reachable`, `http_status`, and `final_url` for the reachability
+  script to fill. Your own verification belongs in the pull request description, where a human
+  wrote it and it reads as one.
+- **Attribution is mandatory.** Every entry credits its publisher, even though the index itself
+  is CC0.
+
+## Mechanics
+
+One dataset is one file and one pull request. Small changes get reviewed; large ones wait.
+
+Before opening a pull request, run the checks the CI will run anyway:
+
+```bash
+pip install -r requirements.txt
+python scripts/validate.py       # schema, filename==id, uniqueness
+python scripts/build_index.py    # regenerate catalog.json, commit it in the same change
+```
+
+`catalog.json` is generated. Never hand-edit it — edit the YAML and rebuild, or CI's staleness
+guard will catch the difference.
+
+## If you would rather not write YAML
+
+Every vertical accepts dataset suggestions as issues. Name the dataset and its canonical source;
+a curator turns it into an entry. That is a genuine contribution, not a lesser one — knowing
+which dataset matters is the harder half.
+
+## Conduct, support, security
+
+See [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md), [`SUPPORT.md`](SUPPORT.md), and
+[`SECURITY.md`](SECURITY.md). Disagreements about whether an entry is *accurate* are not conduct
+matters — argue them on the pull request with evidence.
